@@ -1,47 +1,38 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css" />
-    <title>BUS MALL</title>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Bus Mall</title>
 </head>
+<body>
+    <header>
+        <h1>Bus Mall</h1>
+    </header>
+    <main>
+        <p>Welcome to our website, please make 25 votings to see the result:</p>
+        <hr>
+         
+        <br>
+        <div id="container">
+          <img id="firstImg" src="" alt="" />
+          <img id="secondImg" src="" alt="" />
+          <img id="thirdImg" src="" alt="" />
+        </div>
+        <br>
+        <button id="button">View Results</button>
+        
+        <ul id="results"></ul>
+        <canvas id="theChart" width="200" height="200" style="margin-bottom: 100px;"></canvas>
 
-    <body>
-
-      <header>
-  
-          <h1>choosing images game</h1>
-  
-      </header>
-  
-      <main>
-  
-          <p>Welcome to our website, please make 25 votings to see the result:</p>
-  
-          <div id="container">
-  
-              <img id="firstImg" src="" >
-  
-              <img id="secondImg" src="">
-  
-              <img id="thirdImg" src="">
-  
-          </div>
-  <br>
-          <button id="button">View Results</button>
-  
-          <ul id="results"> </ul>
-  
-      </main>
-
-      <footer>
-
+    </main>
+    <footer>
+        
     </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/app.js"></script>
-
 </body>
-
 </html>

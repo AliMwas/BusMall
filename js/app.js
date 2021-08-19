@@ -1,114 +1,144 @@
 'use strict';
 
-let attemptEl = document.getElementById('attempts');
 let container = document.getElementById('');
-let firstImg = document.getElementById('firstImg');
-let secondImg = document.getElementById('secondImg');
-let thirdImg = document.getElementById('thirdImg');
+let firstImage = document.getElementById('firstImg')
+let secondImage = document.getElementById('secondImg')
+let thirdImage = document.getElementById('thirdImg')
+
 let result = document.getElementById('results');
 
-let arrayOfImages = ['bag.jpg', 'banana.jpg', 'breakfast.jpg', 'bathroom.jpg', 'boots.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg ', 'unicorn.jpg', 'water-can.jpg ', 'wine-glass.jpg'];
+let arrayOfImages  = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'water-can.jpg', 'wine-glass.jpg'];
 
+let maxAttempts = 25;
 let attempt = 1;
-let maxAttempt = 25;
-let saveImages = [];
+let displayImage = [];
+let voteImageArray = [];
+let viewImageArray = [];
+let product = [];
+let nameImage = [];
 
-function Image(imgName) {
 
-    this.imgName = imgName.split('.')[0];
-    this.img = `images/${imgName}`;
-    this.votes = 0;
-    this.views = 0;
-    saveImages.push(this);
+function Image(productName) {
+    this.pName = productName.split('.')[0];
+    this.imgPath = `Images/${productName}`;
+    this.Votes = 0;
+    this.Views = 0;
+    product.push(this);
+    nameImage.push(this.pName);
 
 }
 
-for (let i = 0; i < arrayOfImages.length; i++) {
-
-    new Image(arrayOfImages[i]);
+for (let i = 0; i < arrayOfImages .length; i++) {
+    new Image(arrayOfImages [i])
 }
 
-function gitRandomImage() {
 
-    return Math.floor(Math.random() * arrayOfImages.length);
+
+function randomImage() {
+    return Math.floor(Math.random() * arrayOfImages .length) 
 }
+
+
 
 let firstIndex;
-let secondIndex;
+let scondIndex;
 let thirdIndex;
 
-function renderImage() {
+function renderImg() {
+    firstIndex = randomImage();
+    scondIndex = randomImage();
+    thirdIndex = randomImage();
 
-    firstIndex = gitRandomImage();
-    secondIndex = gitRandomImage();
-    thirdIndex = gitRandomImage();
-
-    while (firstIndex === secondIndex || secondIndex === thirdIndex || thirdIndex === firstIndex) {
-
-        firstIndex = gitRandomImage();
-        thirdIndex = gitRandomImage();
+    while (firstIndex === scondIndex || scondIndex == thirdIndex || firstIndex === thirdIndex || displayImage.includes(firstIndex) || displayImage.includes(scondIndex) || displayImage.includes(thirdIndex)) {
+        firstIndex = randomImage();
+        scondIndex = randomImage();
+        thirdIndex = randomImage();
     }
+    firstImage.setAttribute('src', product[firstIndex].imgPath);
+    secondImage.setAttribute('src', product[scondIndex].imgPath);
+    thirdImage.setAttribute('src', product[thirdIndex].imgPath);
+    product[firstIndex].Views++;
+    product[scondIndex].Views++;
+    product[thirdIndex].Views++;
 
-    firstImg.setAttribute('src', saveImages[firstIndex].img)
-    secondImg.setAttribute('src', saveImages[secondIndex].img);
-    thirdImg.setAttribute('src', saveImages[thirdIndex].img);
+    displayImage[0]=firstIndex;
+    displayImage[1]=scondIndex;
+    displayImage[2]=thirdIndex;
 
-    saveImages[firstIndex].views++;
-    saveImages[secondIndex].views++;
-    saveImages[thirdIndex].views++;
- 
+
 }
-renderImage();
+renderImg();
 
-firstImg.addEventListener('click', clickHandler);
-secondImg.addEventListener('click', clickHandler);
-thirdImg.addEventListener('click', clickHandler);
+firstImage.addEventListener('click', clickHandle);
+secondImage.addEventListener('click', clickHandle)
+thirdImage.addEventListener('click', clickHandle);
 
-function clickHandler(event) {
+function clickHandle(event) {
+    if (attempt <= maxAttempts) {
 
-    if (attempt <= maxAttempt) {
+        let clickedImage = event.target.id;
 
-        let clik = event.target.id;
+        if (clickedImage === 'firstImg') {
 
-        if (clik === 'firstImg') {
+            product[firstIndex].Votes++;
+        } else if (clickedImage === 'secondImg') {
 
-            saveImages[firstIndex].votes++;
+            product[scondIndex].Votes++
+        } else if (clickedImage === 'thirdImg') {
 
+            product[thirdIndex].Votes++
         }
-
-        else if (clik === 'secondImg') {
-
-            saveImages[secondIndex].votes++
-
-        }
-
-        else if (clik === 'thirdImg') {
-
-            saveImages[thirdIndex].votes++
-
-        }
-
-        renderImage();
-
+        renderImg();
         attempt++;
-
     }
+
+
+
 }
 
-let resultButton = document.getElementById('button');
+let btnEl = document.getElementById('button');
+btnEl.addEventListener('click', showResult)
 
-resultButton.addEventListener('click', showResult);
-
-function showResult() {
-
-    for (let i = 0; i < saveImages.length; i++) {
-
+function showResult(event) {
+    for (let i = 0; i < product.length; i++) {
         let liEl = document.createElement('li');
-
         result.appendChild(liEl);
-
-        liEl.textContent = `${saveImages[i].imgName} has ${saveImages[i].votes} votes and  ${saveImages[i].views} views.`;
-
+        liEl.textContent = `${product[i].pName} has ${product[i].Votes} votes and  ${product[i].Views} views.`;
+        voteImageArray.push(product[i].Votes);
+        viewImageArray.push(product[i].Views);
     }
+    chartRender()
 
+    btnEl.removeEventListener('click', showResult)
+}
+function chartRender() {
+    let ctx = document.getElementById('theChart').getContext('2d');
+    let theChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: nameImage,
+            datasets: [{
+                label: '# Votes',
+                data: voteImageArray,
+                backgroundColor: [
+                    'rgba(255, 0, 0, 0.3)'
+                ],
+               
+            }, {
+                label: '# views',
+                data: viewImageArray,
+                backgroundColor: [
+                    'rgb(60, 179, 113)'
+                ],
+               
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }

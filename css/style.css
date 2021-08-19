@@ -7,7 +7,11 @@
     text-align: center;
  
   }
-  
+  body{
+
+background-image: url(https://coolbackgrounds.io/images/backgrounds/white/white-triangle-369b8d2d.jpg);
+
+  }
   img {
   
     display: inline-block;
@@ -62,3 +66,5 @@ font-family: 'Courier New', Courier, monospace;
   }
 
   
+
+   
