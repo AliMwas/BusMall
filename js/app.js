@@ -112,3 +112,35 @@ function showResult() {
     }
 
 }
+
+function saveToLocalStorage()
+{
+    let data1 = JSON.stringify(product);
+    localStorage.setItem('product',data1);
+}
+function readFromLocalStorage()
+{
+    let stringObj1 = localStorage.getItem('product');
+   
+    
+    let normalObj1 = JSON.parse(stringObj1);
+    
+
+    if(normalObj1)
+    {  
+        product = normalObj1;
+    }
+   
+}
+readFromLocalStorage();
+
+function Image(productName) {
+    this.pName = productName.split('.')[0];
+    this.imgPath = `Img/${productName}`;
+    this.Votes = 0;
+    this.Views = 0;
+    product.push(this);
+    busNameImage.push(this.pName);
+
+}
+
