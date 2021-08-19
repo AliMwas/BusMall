@@ -17,6 +17,7 @@ let viewImageArray = [];
 let product = [];
 let nameImage = [];
 
+
 function saveLocalStorage()
 {
     let data1 = JSON.stringify(product);
@@ -47,6 +48,40 @@ function Image(productName) {
 
 }
 
+
+
+function Image(productName) {
+    this.pName = productName.split('.')[0];
+    this.imgPath = `Images/${productName}`;
+    this.Votes = 0;
+    this.Views = 0;
+    product.push(this);
+    nameImage.push(this.pName);
+
+
+for (let i = 0; i < arrayOfImages .length; i++) {
+    new Image(arrayOfImages [i])
+}
+
+
+
+
+function randomImage() {
+    return Math.floor(Math.random() * arrayOfImages .length) 
+}
+
+
+
+let firstIndex;
+let scondIndex;
+let thirdIndex;
+
+function renderImg() {
+    firstIndex = randomImage();
+    scondIndex = randomImage();
+    thirdIndex = randomImage();
+
+
 for (let i = 0; i < arrayOfImages .length; i++) {
     new Image(arrayOfImages [i])
 }
@@ -68,6 +103,7 @@ function renderImg() {
     scondIndex = randomImage();
     thirdIndex = randomImage();
 
+
     while (firstIndex === scondIndex || scondIndex == thirdIndex || firstIndex === thirdIndex || displayImage.includes(firstIndex) || displayImage.includes(scondIndex) || displayImage.includes(thirdIndex)) {
         firstIndex = randomImage();
         scondIndex = randomImage();
@@ -83,7 +119,6 @@ function renderImg() {
     displayImage[0]=firstIndex;
     displayImage[1]=scondIndex;
     displayImage[2]=thirdIndex;
-
 
 }
 renderImg();
@@ -127,6 +162,7 @@ function showResult(event) {
         viewImageArray.push(product[i].Views);
     }
     chartRender()
+
     saveLocalStorage
 
     btnEl.removeEventListener('click', showResult)
@@ -163,4 +199,40 @@ function chartRender() {
     });
 }
 
+
+
+
+    btnEl.removeEventListener('click', showResult)
+}
+function chartRender() {
+    let ctx = document.getElementById('theChart').getContext('2d');
+    let theChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: nameImage,
+            datasets: [{
+                label: '# Votes',
+                data: voteImageArray,
+                backgroundColor: [
+                    'rgba(255, 0, 0, 0.3)'
+                ],
+               
+            }, {
+                label: '# views',
+                data: viewImageArray,
+                backgroundColor: [
+                    'rgb(60, 179, 113)'
+                ],
+               
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
 
