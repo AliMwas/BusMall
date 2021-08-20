@@ -2,30 +2,9 @@
   box-sizing: border-box;
 }
 
-
 h1 {
  color: coral;
   text-align: center;
-
-  h1 {
-   color: coral;
-    text-align: center;
- 
-  }
-  body{
-
-background-image: url(https://coolbackgrounds.io/images/backgrounds/white/white-triangle-369b8d2d.jpg);
-
-  }
-  img {
-  
-    display: inline-block;
-  
-    width: 200px;
-    padding: 4px;
-    height: 180px;
-    background-color:#cce5ff;
-    margin-top: 2px;
 
 }
 body{
@@ -85,7 +64,5 @@ font-style: italic;
 font-size: large;
 font-family: 'Courier New', Courier, monospace;
 }
-
-
 
 
